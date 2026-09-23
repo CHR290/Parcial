@@ -69,6 +69,7 @@ public class Supermercado {
         boolean agregado = false;
         if(!verificarCliente(cliente.getDocumento())){
             listaClientes.add(cliente);
+            agregado = true;
         }
         return agregado;
     }
