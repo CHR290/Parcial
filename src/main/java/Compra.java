@@ -14,6 +14,7 @@ public class Compra {
         this.fecha = new Date();
         this.metodoDePago = metodoDePago;
         this.valorTotal = valorTotal;
+        listaProductos = new ArrayList<>();
     }
 
     public int getCodigo() {
@@ -59,11 +60,11 @@ public class Compra {
     @Override
     public String toString() {
         return "compra{" +
-                "codigo=" + codigo +
-                ", fecha=" + fecha +
-                ", metodoDePago=" + metodoDePago +
-                ", valorTotal=" + valorTotal +
-                ", listaProductos="+ listaProductos +
+                "\ncodigo=" + codigo +
+                "\n fecha=" + fecha +
+                "\n metodoDePago=" + metodoDePago +
+                "\n valorTotal=" + valorTotal +
+                "\n listaProductos="+ listaProductos +
                 '}';
     }
 }

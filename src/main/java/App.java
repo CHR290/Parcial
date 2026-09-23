@@ -29,6 +29,7 @@ public class App {
 
             System.out.println("0. Salir");
             opcion = sc.nextInt();
+            sc.nextLine();
             switch (opcion) {
                 case 1:
 
@@ -60,18 +61,15 @@ public class App {
                 case 10:
 
                     break;
-                case 11:
+                case 0:
 
                     break;
-                case 12:
 
-                    break;
-                case 13:
-
-                    break;
+            }
+            if (opcion != 0) {
+                System.out.println("\nPresione ENTER para continuar...");
+                sc.nextLine(); // Espera a que presione ENTER
             }
         } while (opcion != 0);
-
-
     }
 }

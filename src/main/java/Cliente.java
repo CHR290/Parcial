@@ -12,6 +12,7 @@ public class Cliente {
         this.documento = documento;
         this.telefono = telefono;
         this.correo = correo;
+        listaCompras = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -57,11 +58,12 @@ public class Cliente {
     @Override
     public String toString() {
         return "Cliente{" +
-                "nombre='" + nombre + '\'' +
-                ", documento=" + documento +
-                ", telefono=" + telefono +
-                ", correo='" + correo + '\'' +
-                ", listaCompras=" + listaCompras +
+                "\n nombre='" + nombre + '\'' +
+                "\n documento=" + documento +
+                "\n telefono=" + telefono +
+                "\n correo='" + correo + '\'' +
+                "\n listaCompras=" + listaCompras +
                 '}';
     }
+
 }

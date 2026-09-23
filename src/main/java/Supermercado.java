@@ -12,6 +12,9 @@ public class Supermercado {
         this.nombreComercial = nombreComercial;
         this.direccion = direccion;
         this.telefono = telefono;
+        listaClientes = new ArrayList<>();
+        listaProductos = new ArrayList<>();
+        historialCompras = new ArrayList<>();
     }
 
     public String getNombreComercial() {
@@ -62,15 +65,60 @@ public class Supermercado {
         this.listaProductos = listaProductos;
     }
 
+    public boolean agregarCliente(Cliente cliente) {
+        boolean agregado = false;
+        if(!verificarCliente(cliente.getDocumento())){
+            listaClientes.add(cliente);
+        }
+        return agregado;
+    }
+
+    public boolean verificarCliente(int documento){
+        boolean existe = false;
+        for(Cliente cliente: listaClientes){
+            if(cliente.getDocumento()==documento){
+                existe = true;
+                break;
+            }
+        }
+        return existe;
+    }
+
+    public boolean actualizarCliente(int documento, String nombre, int telefono, String correo){
+        boolean actualizado = false;
+        for(Cliente cliente: listaClientes){
+            if(cliente.getDocumento()==documento){
+                cliente.setNombre(nombre);
+                cliente.setCorreo(correo);
+                cliente.setTelefono(telefono);
+                actualizado = true;
+                break;
+            }
+        }
+    return actualizado;
+    }
+
+    public boolean eliminarCliente(int documento){
+        boolean eliminado = false;
+        for(Cliente cliente: listaClientes){
+            if(cliente.getDocumento()==documento){
+                listaClientes.remove(cliente);
+                eliminado = true;
+                break;
+            }
+        }
+        return eliminado;
+    }
+
     @Override
     public String toString() {
         return "Supermercado{" +
-                "nombreComercial='" + nombreComercial + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", telefono=" + telefono +
-                ", listaClientes=" + listaClientes +
-                ", historialCompras=" + historialCompras +
-                ", listaProductos=" + listaProductos +
+                "\n nombreComercial='" + nombreComercial + '\'' +
+                "\n direccion='" + direccion + '\'' +
+                "\n telefono=" + telefono +
+                "\n listaClientes=" + listaClientes +
+                "\n historialCompras=" + historialCompras +
+                "\n listaProductos=" + listaProductos +
                 '}';
     }
 
