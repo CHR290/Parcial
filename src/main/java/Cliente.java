@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
 public class Cliente {
     private String nombre;
     private int documento;
     private int telefono;
     private String correo;
+    private List<Compra> listaCompras;
 
     public Cliente(String nombre, int documento, int telefono, String correo) {
         this.nombre = nombre;
@@ -43,6 +46,14 @@ public class Cliente {
         this.correo = correo;
     }
 
+    public List<Compra> getListaCompras() {
+        return listaCompras;
+    }
+
+    public void setListaCompras(List<Compra> listaCompras) {
+        this.listaCompras = listaCompras;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -50,6 +61,7 @@ public class Cliente {
                 ", documento=" + documento +
                 ", telefono=" + telefono +
                 ", correo='" + correo + '\'' +
+                ", listaCompras=" + listaCompras +
                 '}';
     }
 }

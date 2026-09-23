@@ -1,13 +1,17 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 public class Compra {
     private int codigo;
     private Date fecha;
     private MetodoDePago metodoDePago;
     double valorTotal;
+    private List<Producto> listaProductos;
 
-    public Compra(int codigo, Date fecha, MetodoDePago metodoDePago, double valorTotal) {
+    public Compra(int codigo, MetodoDePago metodoDePago, double valorTotal) {
         this.codigo = codigo;
-        this.fecha = fecha;
+        this.fecha = new Date();
         this.metodoDePago = metodoDePago;
         this.valorTotal = valorTotal;
     }
@@ -44,6 +48,14 @@ public class Compra {
         this.valorTotal = valorTotal;
     }
 
+    public List<Producto> getProductos() {
+        return listaProductos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.listaProductos = productos;
+    }
+
     @Override
     public String toString() {
         return "compra{" +
@@ -51,6 +63,7 @@ public class Compra {
                 ", fecha=" + fecha +
                 ", metodoDePago=" + metodoDePago +
                 ", valorTotal=" + valorTotal +
+                ", listaProductos="+ listaProductos +
                 '}';
     }
 }
