@@ -67,17 +67,17 @@ public class Supermercado {
 
     public boolean agregarCliente(Cliente cliente) {
         boolean agregado = false;
-        if(!verificarCliente(cliente.getDocumento())){
+        if (!verificarCliente(cliente.getDocumento())) {
             listaClientes.add(cliente);
             agregado = true;
         }
         return agregado;
     }
 
-    public boolean verificarCliente(int documento){
+    public boolean verificarCliente(int documento) {
         boolean existe = false;
-        for(Cliente cliente: listaClientes){
-            if(cliente.getDocumento()==documento){
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getDocumento() == documento) {
                 existe = true;
                 break;
             }
@@ -85,10 +85,10 @@ public class Supermercado {
         return existe;
     }
 
-    public boolean actualizarCliente(int documento, String nombre, int telefono, String correo){
+    public boolean actualizarCliente(int documento, String nombre, int telefono, String correo) {
         boolean actualizado = false;
-        for(Cliente cliente: listaClientes){
-            if(cliente.getDocumento()==documento){
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getDocumento() == documento) {
                 cliente.setNombre(nombre);
                 cliente.setCorreo(correo);
                 cliente.setTelefono(telefono);
@@ -96,13 +96,13 @@ public class Supermercado {
                 break;
             }
         }
-    return actualizado;
+        return actualizado;
     }
 
-    public boolean eliminarCliente(int documento){
+    public boolean eliminarCliente(int documento) {
         boolean eliminado = false;
-        for(Cliente cliente: listaClientes){
-            if(cliente.getDocumento()==documento){
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getDocumento() == documento) {
                 listaClientes.remove(cliente);
                 eliminado = true;
                 break;
@@ -111,22 +111,22 @@ public class Supermercado {
         return eliminado;
     }
 
-    public boolean verificarStockProducto(int codigo, int cantidad){
+    public boolean verificarStockProducto(int codigo, int cantidad) {
         boolean disponible = false;
-        for(Producto producto: listaProductos){
-            if(producto.getCodigo()==codigo&&producto.getCantidad()>=cantidad){
-                producto.setCantidad(producto.getCantidad()-cantidad);
+        for (Producto producto : listaProductos) {
+            if (producto.getCodigo() == codigo && producto.getCantidad() >= cantidad) {
                 disponible = true;
+                actualizarProducto(codigo, producto.getNombre(),producto.getCategoria(),producto.getPrecio(), producto.getCantidad()-cantidad);
                 break;
             }
         }
         return disponible;
     }
 
-    public boolean registrarCompra(int documento, Compra compra){
+    public boolean registrarCompra(int documento, Compra compra) {
         boolean exitoso = false;
-        for(Cliente cliente: listaClientes){
-            if(cliente.getDocumento()==documento){
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getDocumento() == documento) {
                 cliente.agregarCompra(compra);
                 historialCompras.add(compra);
             }
@@ -134,6 +134,50 @@ public class Supermercado {
         return exitoso;
     }
 
+    public boolean agregarProducto(Producto producto) {
+        boolean agregado = false;
+        if (!verificarCliente(producto.getCodigo())) {
+            listaProductos.add(producto);
+        }
+        return agregado;
+    }
+
+    public boolean verificarProducto(int codigo) {
+        boolean existe = false;
+        for (Producto producto : listaProductos) {
+            if (producto.getCodigo() == codigo) {
+                existe = true;
+                break;
+            }
+        }
+        return existe;
+    }
+
+    public boolean actualizarProducto(int codigo, String nombre, Categoria categoria, double precio, int cantidad){
+        boolean actualizado = false;
+        for(Producto producto: listaProductos){
+            if(producto.getCodigo()==codigo){
+                producto.setNombre(nombre);
+                producto.setCategoria(categoria);
+                producto.setPrecio(precio);
+                producto.setCantidad(cantidad);
+                actualizado = true;
+            }
+        }
+        return actualizado;
+    }
+
+    public boolean eliminarProducto(int codigo) {
+        boolean eliminado = false;
+        for (Producto producto : listaProductos) {
+            if (producto.getCodigo() == codigo){
+                listaProductos.remove(producto);
+                eliminado = true;
+                break;
+            }
+        }
+        return eliminado;
+    }
 
     @Override
     public String toString() {

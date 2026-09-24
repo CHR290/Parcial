@@ -1,16 +1,21 @@
 import java.util.Date;
+import java.util.List;
 public class Compra {
     private int codigo;
     private Date fecha;
     private MetodoDePago metodoDePago;
     double valorTotal;
+    private List<Producto> listaProductos;
 
     public Compra(int codigo, MetodoDePago metodoDePago, double valorTotal, List<Producto> productos) {
         this.codigo = codigo;
-        this.fecha = fecha;
+        this.fecha = new Date();
         this.metodoDePago = metodoDePago;
         this.valorTotal = valorTotal;
         listaProductos = productos;
+    }
+    public int getCodigo(){
+        return codigo;
     }
 
     public void setCodigo(int codigo) {
@@ -41,13 +46,22 @@ public class Compra {
         this.valorTotal = valorTotal;
     }
 
+    public List<Producto> getProductos() {
+        return listaProductos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.listaProductos = productos;
+    }
+
     @Override
     public String toString() {
         return "compra{" +
-                "codigo=" + codigo +
-                ", fecha=" + fecha +
-                ", metodoDePago=" + metodoDePago +
-                ", valorTotal=" + valorTotal +
+                "\ncodigo=" + codigo +
+                "\n fecha=" + fecha +
+                "\n metodoDePago=" + metodoDePago +
+                "\n valorTotal=" + valorTotal +
+                "\n listaProductos="+ listaProductos +
                 '}';
     }
 }

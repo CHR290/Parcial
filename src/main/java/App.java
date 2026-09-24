@@ -16,6 +16,8 @@ public class App {
         String correo;
         int codigoProducto;
         int codigoCompra = 1;
+        int opcionCategoria;
+        Categoria categoria = null;
         do {
             System.out.println("======Menú supermercado======");
             System.out.println("-----Clientes  -----");
@@ -32,7 +34,7 @@ public class App {
 
             System.out.println("-----Compra-----");
             System.out.println("9. Registrar Compra");
-            System.out.println("10. Mostrar reporte");
+            System.out.println("10. consultar reporte");
 
 
             System.out.println("0. Salir");
@@ -82,7 +84,6 @@ public class App {
                     }else{
                         System.out.println("no se ha encontrado al cliente");
                     }
-
                     break;
                 case 4:
                     System.out.println("---Mostrar cliente---");
@@ -102,16 +103,104 @@ public class App {
                     }
                     break;
                 case 5:
-
+                    System.out.println("---Agregar producto---");
+                    System.out.println("ingrese el nombre del producto: ");
+                    nombre = sc.nextLine();
+                    System.out.println("ingrese la cantidad: ");
+                    cantidad = Integer.parseInt(sc.nextLine());
+                    System.out.println("ingrese el codigo: ");
+                    codigoProducto = Integer.parseInt(sc.nextLine());
+                    System.out.println("ingrese el precio por unidad: ");
+                    precio = Integer.parseInt(sc.nextLine());
+                    System.out.println("ingrese la categoria");
+                    System.out.println("1. Alimentos");
+                    System.out.println("2. Bebidas");
+                    System.out.println("3. Aseo");
+                    System.out.println("4. Cuidado personal");
+                    opcionCategoria = Integer.parseInt(sc.nextLine());
+                    switch(opcionCategoria){
+                        case 1:
+                            categoria = Categoria.ALIMENTOS;
+                            break;
+                        case 2:
+                            categoria = Categoria.BEBIDAS;
+                            break;
+                        case 3:
+                            categoria = Categoria.ASEO;
+                            break;
+                        case 4:
+                            categoria = Categoria.CUIDADO_PERSONAL;
+                            break;
+                    }
+                    Producto producto = new Producto(codigoProducto,nombre,categoria, precio, cantidad);
+                    if(supermercado.agregarProducto(producto)){
+                        System.out.println("producto agregado correctamente");
+                    }else{
+                        System.out.println("el producto ya existe");
+                    }
                     break;
                 case 6:
-
+                    System.out.println("ingrese el codigo: ");
+                    codigoProducto = Integer.parseInt(sc.nextLine());
+                    System.out.println("---Actualizar producto---");
+                    System.out.println("ingrese el nuevo nombre del producto: ");
+                    nombre = sc.nextLine();
+                    System.out.println("ingrese la nueva cantidad: ");
+                    cantidad = Integer.parseInt(sc.nextLine());
+                    System.out.println("ingrese el nuevo precio por unidad: ");
+                    precio = Integer.parseInt(sc.nextLine());
+                    System.out.println("ingrese la nueva categoria");
+                    System.out.println("1. Alimentos");
+                    System.out.println("2. Bebidas");
+                    System.out.println("3. Aseo");
+                    System.out.println("4. Cuidado personal");
+                    opcionCategoria = Integer.parseInt(sc.nextLine());
+                    switch(opcionCategoria){
+                        case 1:
+                            categoria = Categoria.ALIMENTOS;
+                            break;
+                        case 2:
+                            categoria = Categoria.BEBIDAS;
+                            break;
+                        case 3:
+                            categoria = Categoria.ASEO;
+                            break;
+                        case 4:
+                            categoria = Categoria.CUIDADO_PERSONAL;
+                            break;
+                    }
+                    if(supermercado.actualizarProducto(codigoProducto, nombre, categoria, precio, cantidad)){
+                        System.out.println("el producto se ha actualziado correctamente");
+                    }else{
+                        System.out.println("no se ha encontrado el producto");
+                    }
                     break;
                 case 7:
-
+                    System.out.println("---Eliminar producto---");
+                    System.out.println("ingrese el codigo del producto: ");
+                   codigoProducto = Integer.parseInt(sc.nextLine());
+                    if(supermercado.eliminarProducto(codigoProducto)){
+                        System.out.println("Producto eliminado correctamente");
+                    }else{
+                        System.out.println("no se ha encontrado el producto");
+                    }
                     break;
                 case 8:
-
+                    System.out.println("---Mostrar producto---");
+                    System.out.println("ingrese el codigo, ingrese 0 para ver la lista completa");
+                    codigoProducto = Integer.parseInt(sc.nextLine());
+                    if(codigoProducto ==0){
+                        for(Producto producto1: supermercado.getListaProductos()){
+                            System.out.println(producto1);
+                        }
+                    }else{
+                        for(Producto producto1: supermercado.getListaProductos()){
+                            if(producto1.getCodigo()==codigoProducto){
+                                System.out.println(producto1);
+                                break;
+                            }
+                        }
+                    }
                     break;
                 case 9:
                     System.out.println("---registrar compra---");
@@ -139,10 +228,10 @@ public class App {
                             System.out.println("ingrese la cantidad: ");
                             cantidad: Integer.parseInt(sc.nextLine());
                             if(supermercado.verificarStockProducto(codigoProducto, cantidad)){
-                                for(Producto producto: supermercado.getListaProductos()){
-                                    if(producto.getCodigo()==codigoProducto){
-                                        productos.add(producto);
-                                        valorTotal += producto.getPrecio();
+                                for(Producto producto1: supermercado.getListaProductos()){
+                                    if(producto1.getCodigo()==codigoProducto){
+                                        productos.add(producto1);
+                                        valorTotal += producto1.getPrecio()*cantidad;
                                     }
                                 }
                             }
@@ -167,6 +256,8 @@ public class App {
                     Compra compra = new Compra(codigoCompra, metodoDePago, valorTotal, productos);
                     if(supermercado.registrarCompra(documento, compra)){
                         System.out.println("se ha registrado la compra con exito");
+                        System.out.println("--resumen--");
+                        System.out.println(compra);
                     }else{
                         System.out.println("no se ha podido registrar la compra");
                     }
