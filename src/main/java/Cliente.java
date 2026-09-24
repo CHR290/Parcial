@@ -1,18 +1,14 @@
-import java.util.ArrayList;
-import java.util.List;
 public class Cliente {
     private String nombre;
     private int documento;
     private int telefono;
     private String correo;
-    private List<Compra> listaCompras;
 
     public Cliente(String nombre, int documento, int telefono, String correo) {
         this.nombre = nombre;
         this.documento = documento;
         this.telefono = telefono;
         this.correo = correo;
-        listaCompras = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -62,12 +58,10 @@ public class Cliente {
     @Override
     public String toString() {
         return "Cliente{" +
-                "\n nombre='" + nombre + '\'' +
-                "\n documento=" + documento +
-                "\n telefono=" + telefono +
-                "\n correo='" + correo + '\'' +
-                "\n listaCompras=" + listaCompras +
+                "nombre='" + nombre + '\'' +
+                ", documento=" + documento +
+                ", telefono=" + telefono +
+                ", correo='" + correo + '\'' +
                 '}';
     }
-
 }
