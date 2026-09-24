@@ -111,6 +111,30 @@ public class Supermercado {
         return eliminado;
     }
 
+    public boolean verificarStockProducto(int codigo, int cantidad){
+        boolean disponible = false;
+        for(Producto producto: listaProductos){
+            if(producto.getCodigo()==codigo&&producto.getCantidad()>=cantidad){
+                producto.setCantidad(producto.getCantidad()-cantidad);
+                disponible = true;
+                break;
+            }
+        }
+        return disponible;
+    }
+
+    public boolean registrarCompra(int documento, Compra compra){
+        boolean exitoso = false;
+        for(Cliente cliente: listaClientes){
+            if(cliente.getDocumento()==documento){
+                cliente.agregarCompra(compra);
+                historialCompras.add(compra);
+            }
+        }
+        return exitoso;
+    }
+
+
     @Override
     public String toString() {
         return "Supermercado{" +

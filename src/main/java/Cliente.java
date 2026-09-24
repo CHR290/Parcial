@@ -55,6 +55,10 @@ public class Cliente {
         this.listaCompras = listaCompras;
     }
 
+    public void agregarCompra(Compra compra){
+        listaCompras.add(compra);
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +

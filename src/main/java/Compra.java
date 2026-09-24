@@ -9,12 +9,12 @@ public class Compra {
     double valorTotal;
     private List<Producto> listaProductos;
 
-    public Compra(int codigo, MetodoDePago metodoDePago, double valorTotal) {
+    public Compra(int codigo, MetodoDePago metodoDePago, double valorTotal, List<Producto> productos) {
         this.codigo = codigo;
         this.fecha = new Date();
         this.metodoDePago = metodoDePago;
         this.valorTotal = valorTotal;
-        listaProductos = new ArrayList<>();
+        listaProductos = productos;
     }
 
     public int getCodigo() {

@@ -11,7 +11,11 @@ public class App {
         String nombre;
         int documento;
         int telefono;
+        int cantidad = 0;
+        double precio;
         String correo;
+        int codigoProducto;
+        int codigoCompra = 1;
         do {
             System.out.println("======Menú supermercado======");
             System.out.println("-----Clientes  -----");
@@ -110,7 +114,62 @@ public class App {
 
                     break;
                 case 9:
-
+                    System.out.println("---registrar compra---");
+                    boolean clienteEncontrado = false;
+                    do {
+                        System.out.println("ingrese el documento del cliente");
+                        documento = Integer.parseInt(sc.nextLine());
+                        if(supermercado.verificarCliente(documento)){
+                            clienteEncontrado = true;
+                        }else{
+                            System.out.println("no se ha encontrado al cliente");
+                        }
+                    }while(!clienteEncontrado);
+                    MetodoDePago metodoDePago = null;
+                    int eleccion = 1;
+                    List<Producto> productos = new ArrayList<>();
+                    double valorTotal = 0;
+                    do{
+                        System.out.println("1. agregar producto a la compra");
+                        System.out.println("2. continuar");
+                        eleccion = Integer.parseInt(sc.nextLine());
+                        if(eleccion==1){
+                            System.out.println("ingrese el codigo del producto: ");
+                            codigoProducto = Integer.parseInt(sc.nextLine());
+                            System.out.println("ingrese la cantidad: ");
+                            cantidad: Integer.parseInt(sc.nextLine());
+                            if(supermercado.verificarStockProducto(codigoProducto, cantidad)){
+                                for(Producto producto: supermercado.getListaProductos()){
+                                    if(producto.getCodigo()==codigoProducto){
+                                        productos.add(producto);
+                                        valorTotal += producto.getPrecio();
+                                    }
+                                }
+                            }
+                        }
+                    }while(eleccion==1);
+                    System.out.println("seleccione el metodo de pago");
+                    System.out.println("1. Tarjeta");
+                    System.out.println("2. transferencia");
+                    System.out.println("3. Efectivo");
+                    eleccion = Integer.parseInt(sc.nextLine());
+                    switch(eleccion){
+                        case 1:
+                            metodoDePago = MetodoDePago.TARJETA;
+                            break;
+                        case 2:
+                            metodoDePago = MetodoDePago.TRASNFERENCIA;
+                            break;
+                        case 3:
+                            metodoDePago = MetodoDePago.EFECTIVO;
+                            break;
+                    }
+                    Compra compra = new Compra(codigoCompra, metodoDePago, valorTotal, productos);
+                    if(supermercado.registrarCompra(documento, compra)){
+                        System.out.println("se ha registrado la compra con exito");
+                    }else{
+                        System.out.println("no se ha podido registrar la compra");
+                    }
                     break;
                 case 10:
 
