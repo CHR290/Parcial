@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 public class Supermercado {
     private String nombreComercial;
     private String direccion;
@@ -7,14 +10,16 @@ public class Supermercado {
     private List<Cliente> listaClientes;
     private List<Compra> historialCompras;
     private List<Producto> listaProductos;
+    private SimpleDateFormat formateadorDia;
 
     public Supermercado(String nombreComercial, String direccion, int telefono) {
         this.nombreComercial = nombreComercial;
         this.direccion = direccion;
         this.telefono = telefono;
-        listaClientes = new ArrayList<>();
-        listaProductos = new ArrayList<>();
-        historialCompras = new ArrayList<>();
+        this.listaClientes = new ArrayList<>();
+        this.listaProductos = new ArrayList<>();
+        this.historialCompras = new ArrayList<>();
+        this.formateadorDia = new SimpleDateFormat("dd/MM/yyyy");
     }
 
     public String getNombreComercial() {
@@ -111,6 +116,18 @@ public class Supermercado {
         return eliminado;
     }
 
+    public boolean mostrarCliente(int documento){
+        boolean existe = false;
+        for(Cliente cliente:listaClientes){
+            if(cliente.getDocumento()==documento){
+                System.out.println(cliente);
+                existe = true;
+                break;
+            }
+        }
+        return existe;
+    }
+
     public boolean verificarStockProducto(int codigo, int cantidad) {
         boolean disponible = false;
         for (Producto producto : listaProductos) {
@@ -129,6 +146,7 @@ public class Supermercado {
             if (cliente.getDocumento() == documento) {
                 cliente.agregarCompra(compra);
                 historialCompras.add(compra);
+                exitoso = true;
             }
         }
         return exitoso;
@@ -138,6 +156,7 @@ public class Supermercado {
         boolean agregado = false;
         if (!verificarCliente(producto.getCodigo())) {
             listaProductos.add(producto);
+            agregado = true;
         }
         return agregado;
     }
@@ -177,6 +196,29 @@ public class Supermercado {
             }
         }
         return eliminado;
+    }
+
+    public boolean mostrarProducto(int codigo){
+        boolean existe = false;
+        for(Producto producto:listaProductos){
+            if(producto.getCodigo()==codigo){
+                System.out.println(producto);
+                existe = true;
+                break;
+            }
+        }
+        return existe;
+    }
+
+    public List<Compra> consultarReporte(String fecha){
+        List<Compra> reporteDeCompras = new ArrayList<>();
+        for(Compra compra:historialCompras){
+            String fechaCompra = formateadorDia.format(compra.getFecha());
+            if(fechaCompra.equals(fecha)){
+                System.out.println(compra);
+            }
+        }
+        return reporteDeCompras;
     }
 
     @Override

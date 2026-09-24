@@ -60,7 +60,7 @@ public class Producto {
                 "\n nombre='" + nombre + '\'' +
                 "\n categoria=" + categoria +
                 "\n precio=" + precio +
-                "\n cantidad=" + cantidad +
+                "\n cantidad restante=" + cantidad +
                 '}';
     }
 }

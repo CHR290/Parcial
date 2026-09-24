@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
@@ -12,6 +13,7 @@ public class Cliente {
         this.documento = documento;
         this.telefono = telefono;
         this.correo = correo;
+        this.listaCompras = new ArrayList<>();
     }
 
     public String getNombre() {

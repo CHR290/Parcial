@@ -1,10 +1,9 @@
 import java.util.Scanner;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 public class App {
-    static void main(){
+    public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         Supermercado supermercado = new Supermercado("MarketPlus", "Carrera 12", 320892986);
         int opcion = 0;
@@ -38,8 +37,17 @@ public class App {
 
 
             System.out.println("0. Salir");
-            opcion = sc.nextInt();
-            sc.nextLine();
+            opcion = -1;
+            while (opcion == -1) {
+                String entrada = sc.nextLine().trim();
+                if (!entrada.isEmpty()) {
+                    try {
+                        opcion = Integer.parseInt(entrada);
+                    } catch (NumberFormatException e) {
+                        System.out.print("ingrese una opción válida: ");
+                    }
+                }
+            }
             switch (opcion) {
                 case 1:
                     System.out.println("---Agregar cliente---");
@@ -94,12 +102,9 @@ public class App {
                             System.out.println(cliente1);
                         }
                     }else{
-                        for(Cliente cliente1: supermercado.getListaClientes()){
-                            if(cliente1.getDocumento()==documento){
-                                System.out.println(cliente1);
-                                break;
-                            }
-                        }
+                       if(!supermercado.mostrarCliente(documento)){
+                           System.out.println("no se ha encontrado al cliente");
+                       }
                     }
                     break;
                 case 5:
@@ -111,7 +116,7 @@ public class App {
                     System.out.println("ingrese el codigo: ");
                     codigoProducto = Integer.parseInt(sc.nextLine());
                     System.out.println("ingrese el precio por unidad: ");
-                    precio = Integer.parseInt(sc.nextLine());
+                    precio = Double.parseDouble(sc.nextLine());
                     System.out.println("ingrese la categoria");
                     System.out.println("1. Alimentos");
                     System.out.println("2. Bebidas");
@@ -194,11 +199,8 @@ public class App {
                             System.out.println(producto1);
                         }
                     }else{
-                        for(Producto producto1: supermercado.getListaProductos()){
-                            if(producto1.getCodigo()==codigoProducto){
-                                System.out.println(producto1);
-                                break;
-                            }
+                        if(!supermercado.mostrarProducto(codigoProducto)){
+                            System.out.println("no se ha encontrado el producto");
                         }
                     }
                     break;
@@ -226,7 +228,7 @@ public class App {
                             System.out.println("ingrese el codigo del producto: ");
                             codigoProducto = Integer.parseInt(sc.nextLine());
                             System.out.println("ingrese la cantidad: ");
-                            cantidad: Integer.parseInt(sc.nextLine());
+                            cantidad = Integer.parseInt(sc.nextLine());
                             if(supermercado.verificarStockProducto(codigoProducto, cantidad)){
                                 for(Producto producto1: supermercado.getListaProductos()){
                                     if(producto1.getCodigo()==codigoProducto){
@@ -234,6 +236,8 @@ public class App {
                                         valorTotal += producto1.getPrecio()*cantidad;
                                     }
                                 }
+                            }else{
+                                System.out.println("producto no disponible");
                             }
                         }
                     }while(eleccion==1);
@@ -258,17 +262,36 @@ public class App {
                         System.out.println("se ha registrado la compra con exito");
                         System.out.println("--resumen--");
                         System.out.println(compra);
+                        codigoCompra += 1;
                     }else{
+
                         System.out.println("no se ha podido registrar la compra");
                     }
+
                     break;
                 case 10:
-
+                    double gananciaDeldia = 0;
+                    String fecha = "";
+                    List<Compra> reporte;
+                    System.out.println("---consultar reporte---");
+                    while (fecha.trim().isEmpty()) {
+                        System.out.println("Ingrese la fecha a consultar (DD/MM/AAAA):");
+                        fecha = sc.nextLine();
+                    }
+                    fecha = sc.nextLine();
+                    reporte = supermercado.consultarReporte(fecha);
+                    if(!reporte.isEmpty()) {
+                        for (Compra compra1 : reporte) {
+                            System.out.println(compra1);
+                            gananciaDeldia += compra1.valorTotal;
+                        }
+                        System.out.println("ganancia total del dia: " + gananciaDeldia);
+                    }else{
+                        System.out.println("no hay compras registradas en esta fecha");
+                    }
                     break;
                 case 0:
-
                     break;
-
             }
             if (opcion != 0) {
                 System.out.println("\nPresione ENTER para continuar...");
